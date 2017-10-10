@@ -180,8 +180,8 @@ func TestFizzBuzzHandler(t *testing.T) {
 		t.Errorf("handler responsed with status %d instead of %d", status, http.StatusOK)
 	}
 
-	if contentType := responseRecorder.Header().Get(contentTypeHeader); contentType != contentTypeJsonUtf8 {
-		t.Errorf("handler responsed with Content-Type %s instead of %s", contentType, contentTypeJsonUtf8)
+	if contentType := responseRecorder.Header().Get(contentTypeHeader); contentType != contentTypeJSONUtf8 {
+		t.Errorf("handler responsed with Content-Type %s instead of %s", contentType, contentTypeJSONUtf8)
 	}
 }
 
@@ -211,15 +211,15 @@ func TestFizzBuzzHandlerInvalidParameters(t *testing.T) {
 		t.Errorf("handler responsed with status %d instead of %d", status, http.StatusBadRequest)
 	}
 
-	var errorJson map[string]interface{}
+	var errorJSON map[string]interface{}
 
-	json.Unmarshal(responseRecorder.Body.Bytes(), &errorJson)
+	json.Unmarshal(responseRecorder.Body.Bytes(), &errorJSON)
 
-	if int(errorJson["status"].(float64)) != http.StatusBadRequest {
-		t.Errorf("Expected status to be %d instead of %d", http.StatusBadRequest, errorJson["status"])
+	if int(errorJSON["status"].(float64)) != http.StatusBadRequest {
+		t.Errorf("Expected status to be %d instead of %d", http.StatusBadRequest, errorJSON["status"])
 	}
 
-	if errorJson["message"] == "" {
+	if errorJSON["message"] == "" {
 		t.Error("Expected message not to be empty")
 	}
 }

@@ -27,7 +27,7 @@ const errorLimitInvalidInteger string = "limit must be a valid integer"
 const errorLimitLowerOrEqualToZero string = "limit must be greater than 0"
 
 const contentTypeHeader string = "Content-Type"
-const contentTypeJsonUtf8 string = "application/json; charset=UTF-8"
+const contentTypeJSONUtf8 string = "application/json; charset=UTF-8"
 
 // responseError describes an error in a REST context.
 // Provides a status code and a message describing the error to the user.
@@ -85,7 +85,7 @@ func fizzBuzzHandler(responseWriter http.ResponseWriter, request *http.Request) 
 	}
 
 	// Our endpoint serves JSON content
-	responseWriter.Header().Set(contentTypeHeader, contentTypeJsonUtf8)
+	responseWriter.Header().Set(contentTypeHeader, contentTypeJSONUtf8)
 
 	params, err := fetchAndCheckParameters(request)
 

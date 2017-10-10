@@ -18,7 +18,7 @@ func isMultipleOf(i, j int) bool {
 	return i % j == 0
 }
 
-// Computes fizz buzz according to provided parameters.
+// FizzBuzz computes the values of the sequence according to provided parameters.
 // Each resulting value will be passed to callback.
 func FizzBuzz(params *Parameters, callback func (value string, isLast bool)) {
 	string1String2 := params.string1 + params.string2
