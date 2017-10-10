@@ -2,13 +2,14 @@ package main
 
 // This class contains the fizzBuzzHandler that serves HTTP requests.
 // After having fetched and checked the parameters, it will call the fizz buzz
-// algorithm with an implementation that renders the result as JSON.
+// algorithm with a callback that renders the result as JSON.
 
 import (
 	"net/http"
 	"errors"
 	"encoding/json"
 	"log"
+	"io"
 )
 
 const defaultString1 string = "fizz"
@@ -28,10 +29,10 @@ type responseError struct {
 
 // Returns a parameters struct filled from the request.
 // They will be converted to the correct type, checked and defaulted if missing.
-func fetchAndCheckParameters(request *http.Request) (*parameters, error) {
+func fetchAndCheckParameters(request *http.Request) (*Parameters, error) {
 	var err error
 
-	params := parameters{}
+	params := Parameters{}
 
 	params.string1 = defaultString(request.FormValue("string1"), defaultString1)
 	params.string2 = defaultString(request.FormValue("string2"), defaultString2)
@@ -91,5 +92,24 @@ func fizzBuzzHandler(responseWriter http.ResponseWriter, request *http.Request) 
 
 	log.Println("Serving request with parameters :", params)
 
-	fizzBuzz(params, &jsonWriterFizzBuzzCallback{responseWriter})
+	jsonFizzBuzz(params, responseWriter)
+}
+
+// Writes the result of the fizz buzz computation as a JSON array.
+func jsonFizzBuzz(params *Parameters, writer io.Writer) {
+	writer.Write([]byte("["))
+
+	FizzBuzz(params, func(value string, isLast bool) {
+		if data, err := json.Marshal(value); err == nil {
+			writer.Write(data)
+
+			if !isLast {
+				writer.Write([]byte(","))
+			}
+		} else {
+			panic(err)
+		}
+	})
+
+	writer.Write([]byte("]"))
 }
