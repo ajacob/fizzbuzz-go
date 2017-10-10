@@ -20,6 +20,15 @@ const defaultInt2 int = 5
 
 const defaultLimit int = 100
 
+const errorInt1InvalidInteger string = "int1 must be a valid integer"
+const errorInt2InvalidInteger string = "int2 must be a valid integer"
+const errorInt1OrInt2Zero string = "int1 and int2 must not be 0"
+const errorLimitInvalidInteger string = "limit must be a valid integer"
+const errorLimitLowerOrEqualToZero string = "limit must be greater than 0"
+
+const contentTypeHeader string = "Content-Type"
+const contentTypeJsonUtf8 string = "application/json; charset=UTF-8"
+
 // responseError describes an error in a REST context.
 // Provides a status code and a message describing the error to the user.
 type responseError struct {
@@ -38,24 +47,24 @@ func fetchAndCheckParameters(request *http.Request) (*Parameters, error) {
 	params.string2 = defaultString(request.FormValue("string2"), defaultString2)
 
 	if params.int1, err = defaultAtoi(request.FormValue("int1"), defaultInt1); err != nil {
-		return nil, errors.New("int1 must be a valid integer")
+		return nil, errors.New(errorInt1InvalidInteger)
 	}
 
 	if params.int2, err = defaultAtoi(request.FormValue("int2"), defaultInt2); err != nil {
-		return nil, errors.New("int2 must be a valid integer")
+		return nil, errors.New(errorInt2InvalidInteger)
 	}
 
 	// We don't want to divide by zero !
 	if params.int1 == 0 || params.int2 == 0 {
-		return nil, errors.New("int1 and int2 must not be 0")
+		return nil, errors.New(errorInt1OrInt2Zero)
 	}
 
 	if params.limit, err = defaultAtoi(request.FormValue("limit"), defaultLimit); err != nil {
-		return nil, errors.New("limit must be a valid integer")
+		return nil, errors.New(errorLimitInvalidInteger)
 	}
 
 	if params.limit <= 0 {
-		return nil, errors.New("limit must be greater than 0")
+		return nil, errors.New(errorLimitLowerOrEqualToZero)
 	}
 
 	return &params, nil
@@ -76,7 +85,7 @@ func fizzBuzzHandler(responseWriter http.ResponseWriter, request *http.Request) 
 	}
 
 	// Our endpoint serves JSON content
-	responseWriter.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	responseWriter.Header().Set(contentTypeHeader, contentTypeJsonUtf8)
 
 	params, err := fetchAndCheckParameters(request)
 

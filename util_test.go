@@ -2,6 +2,7 @@ package main
 
 import "testing"
 
+// Test the defaultString helper func when it is supposed to return the fallback value.
 func TestDefaultStringFallback(t *testing.T) {
 	expected := "two"
 
@@ -12,6 +13,7 @@ func TestDefaultStringFallback(t *testing.T) {
 	}
 }
 
+// Test the defaultString helper func when it is not supposed to return the fallback value.
 func TestDefaultStringNoFallback(t *testing.T) {
 	expected := "one"
 
@@ -22,6 +24,7 @@ func TestDefaultStringNoFallback(t *testing.T) {
 	}
 }
 
+// Test the defaultAtoi helper func when it is supposed to return the fallback value.
 func TestDefaultAtoiFallback(t *testing.T) {
 	expected := 10
 
@@ -32,6 +35,7 @@ func TestDefaultAtoiFallback(t *testing.T) {
 	}
 }
 
+// Test the defaultAtoi helper func when it is not supposed to return the fallback value.
 func TestDefaultAtoiNoFallback(t *testing.T) {
 	expected := 6
 
