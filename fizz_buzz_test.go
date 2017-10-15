@@ -23,7 +23,7 @@ func TestFizzBuzz(t *testing.T) {
 
 	var result []string
 
-	FizzBuzz(&params, func (value string, isLast bool) {
+	FizzBuzz(&params, func (value string) {
 		result = append(result, value)
 	})
 
@@ -55,7 +55,7 @@ func TestFizzBuzzDifferentParameters(t *testing.T) {
 
 	var result []string
 
-	FizzBuzz(&params, func (value string, isLast bool) {
+	FizzBuzz(&params, func (value string) {
 		result = append(result, value)
 	})
 

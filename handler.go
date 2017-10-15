@@ -108,13 +108,17 @@ func fizzBuzzHandler(responseWriter http.ResponseWriter, request *http.Request) 
 func jsonFizzBuzz(params *Parameters, writer io.Writer) {
 	writer.Write([]byte("["))
 
-	FizzBuzz(params, func(value string, isLast bool) {
-		if data, err := json.Marshal(value); err == nil {
-			writer.Write(data)
+	isFirst := true
 
-			if !isLast {
+	FizzBuzz(params, func(value string) {
+		if data, err := json.Marshal(value); err == nil {
+			if !isFirst {
 				writer.Write([]byte(","))
+			} else {
+				isFirst = false
 			}
+
+			writer.Write(data)
 		} else {
 			panic(err)
 		}

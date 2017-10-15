@@ -20,7 +20,7 @@ func isMultipleOf(i, j int) bool {
 
 // FizzBuzz computes the values of the sequence according to provided parameters.
 // Each resulting value will be passed to callback.
-func FizzBuzz(params *Parameters, callback func (value string, isLast bool)) {
+func FizzBuzz(params *Parameters, callback func (value string)) {
 	string1String2 := params.string1 + params.string2
 
 	var nextValue string
@@ -39,9 +39,6 @@ func FizzBuzz(params *Parameters, callback func (value string, isLast bool)) {
 			nextValue = strconv.Itoa(i)
 		}
 
-		// For the callback to know if there will be more elements
-		isLast := params.limit == i
-
-		callback(nextValue, isLast)
+		callback(nextValue)
 	}
 }
