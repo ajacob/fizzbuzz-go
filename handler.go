@@ -82,6 +82,7 @@ func fizzBuzzHandler(responseWriter http.ResponseWriter, request *http.Request) 
 	// We'll only handle requests on the root path
 	if request.URL.Path != "/" {
 		responseWriter.WriteHeader(http.StatusNotFound)
+		return
 	}
 
 	// Our endpoint serves JSON content
